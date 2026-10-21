@@ -2,6 +2,8 @@
 const filmcontner = document.querySelector("#films-container")
 
 
+const reservedfilms = document.querySelector("#reservation")
+
  randerCards()
 
 // Bienvenue dans le fichier de travail principal de CineBook !
@@ -98,18 +100,25 @@ return `
 
   let buts = document.querySelectorAll(".btn-select-flim")
   buts.forEach(butt=>{
+    let selected= false
   butt.addEventListener("click" , event =>{
-    event.currentTarget.textContent = "Sélectionné"
-    event.currentTarget.style.backgroundColor = 'red'
+    selected = !selected
+    if (selected===true){
+      event.currentTarget.textContent =  "Sélectionné" ;
+      event.currentTarget.style.backgroundColor = 'red';
+    }
+    else{event.currentTarget.textContent =   "Choisir ce film";
+         event.currentTarget.style.backgroundColor = ''};
+ 
     console.log(event.currentTarget)
   
-  })
+  });
 
-  
-  
-    
-    
   } )
+
+
+ 
+
 
 
 // ==================================================
