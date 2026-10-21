@@ -1,4 +1,8 @@
 "use strict";
+const filmcontner = document.querySelector("#films-container")
+
+
+ randerCards()
 
 // Bienvenue dans le fichier de travail principal de CineBook !
 // Le HTML et les données sont prêts, mais les interactions sont volontairement absentes.
@@ -40,20 +44,72 @@
 // MODÈLE : observez l'élément <article data-film-id="1"> dans index.html.
 // ÉCRIVEZ VOTRE CODE ICI :
 
-const filmcontner = document.querySelector("#films-container")
+function randerCards(){ films.forEach(film => {filmcontner.innerHTML += randerCard(film)})}
 
-films.forEach(film => {
-    
-let card =`
+function randerImage(affiche, titre, prix){
+  return `<div class="relative">
+              <img src=${affiche} alt="Affiche de ${titre}" class="aspect-[2/3] w-full object-cover">
+              <span class="absolute bottom-3 right-3 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold shadow-lg">${prix}</span>
+            </div>`
+
+
+}
+
+function times(duree){
+  let houre = duree/60
+  let minut = duree%60
+  return houre.toFixed(0) + "h" + minut + "min"
+}
+
+function randerCantens(genre, titre, duree, id ){
+ return ` <div class="p-4">
+              <p class="text-xs font-bold uppercase tracking-wider text-cine-red">
+                ${genre}
+              </p>
+              <h3 class="mt-1 text-lg font-black">
+                ${titre}
+              </ h3>
+              <p class="mt-2 text-sm text-slate-500">
+                ${times(duree)}
+              </p>
+              <button id=${id} type="button" class=" btn-select-flim mt-4 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 font-extrabold text-slate-700">
+                Choisir ce film
+              </button>
+            </div>`
+
+}
+
+function randerCard(film){
+return `
           <article class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg" data-film-id="${film.id}">
-          <div class="relative"><img src=${film.affiche} alt="Affiche de ${film.titre}" class="aspect-[2/3] w-full object-cover"><span class="absolute bottom-3 right-3 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold shadow-lg">${film.prix}</span></div>
-          <div class="p-4"><p class="text-xs font-bold uppercase tracking-wider text-cine-red">${film.genre}</p><h3 class="mt-1 text-lg font-black">${film.titre}</h3><p class="mt-2 text-sm text-slate-500">${film.duree}</p><button type="button" class="mt-4 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 font-extrabold text-slate-700">Choisir ce film</button></div>
-        </article>
+            ${randerImage(film.affiche, film.titre, film.prix)}
+            
+           ${randerCantens(film.genre , film.titre, film.duree , film.id)}
+
+            
+
+              </article>
 
 `
-filmcontner.innerHTML += card
+}
 
-})
+
+
+
+  let buts = document.querySelectorAll(".btn-select-flim")
+  buts.forEach(butt=>{
+  butt.addEventListener("click" , event =>{
+    event.currentTarget.textContent = "Sélectionné"
+    event.currentTarget.style.backgroundColor = 'red'
+    console.log(event.currentTarget)
+  
+  })
+
+  
+  
+    
+    
+  } )
 
 
 // ==================================================
