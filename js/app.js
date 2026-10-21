@@ -40,6 +40,21 @@
 // MODÈLE : observez l'élément <article data-film-id="1"> dans index.html.
 // ÉCRIVEZ VOTRE CODE ICI :
 
+const filmcontner = document.querySelector("#films-container")
+
+films.forEach(film => {
+    
+let card =`
+          <article class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg" data-film-id="${film.id}">
+          <div class="relative"><img src=${film.affiche} alt="Affiche de ${film.titre}" class="aspect-[2/3] w-full object-cover"><span class="absolute bottom-3 right-3 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold shadow-lg">${film.prix}</span></div>
+          <div class="p-4"><p class="text-xs font-bold uppercase tracking-wider text-cine-red">${film.genre}</p><h3 class="mt-1 text-lg font-black">${film.titre}</h3><p class="mt-2 text-sm text-slate-500">${film.duree}</p><button type="button" class="mt-4 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 font-extrabold text-slate-700">Choisir ce film</button></div>
+        </article>
+
+`
+filmcontner.innerHTML += card
+
+})
+
 
 // ==================================================
 // US02 - SÉLECTIONNER UN FILM
