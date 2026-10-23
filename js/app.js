@@ -2,9 +2,10 @@
 const filmcontner = document.querySelector("#films-container")
 
 
-const reservedfilms = document.querySelector("#reservation")
+
 
  randerCards()
+
 
 // Bienvenue dans le fichier de travail principal de CineBook !
 // Le HTML et les données sont prêts, mais les interactions sont volontairement absentes.
@@ -74,7 +75,7 @@ function randerCantens(genre, titre, duree, id ){
               <p class="mt-2 text-sm text-slate-500">
                 ${times(duree)}
               </p>
-              <button id=${id} type="button" class=" btn-select-flim mt-4 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 font-extrabold text-slate-700">
+              <button id=${id} type="button" data-id= ${id} class=" btn-select-flim mt-4 w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 font-extrabold text-slate-700">
                 Choisir ce film
               </button>
             </div>`
@@ -95,7 +96,7 @@ return `
 `
 }
 
-
+let reseved = [];
 
 
   let buts = document.querySelectorAll(".btn-select-flim")
@@ -103,18 +104,68 @@ return `
     let selected= false
   butt.addEventListener("click" , event =>{
     selected = !selected
+ let ID = Number(butt.dataset.id)
+
     if (selected===true){
+        let movie = films.find(x=>x.id===ID)
+        reseved.push(movie)
+         Cards()
+
       event.currentTarget.textContent =  "Sélectionné" ;
       event.currentTarget.style.backgroundColor = 'red';
+     
+
+     
     }
-    else{event.currentTarget.textContent =   "Choisir ce film";
-         event.currentTarget.style.backgroundColor = ''};
+    else{ let index = reseved.findIndex(f=>f.id===ID)
+           
+         reseved.splice(index,1)
+         Cards()
+         event.currentTarget.textContent =   "Choisir ce film";
+         event.currentTarget.style.backgroundColor = '' ;         
+       
+        };
  
-    console.log(event.currentTarget)
+        
   
-  });
+
+  console.log(reseved)
+  }); 
 
   } )
+  
+
+const reservedfilms = document.querySelector("#film-details")
+
+function Cards(){
+reservedfilms.innerHTML = ""
+  reseved.forEach(movi => {
+
+  reservedfilms.innerHTML += card(movi)})}
+
+
+
+
+function image( affiche, titre){
+ return    `<img src=${affiche} alt="${titre}" class="aspect-[2/3] w-24 rounded-xl object-cover shadow-md"></img>`
+}
+function content(titre,prix,description,duree,genre){
+ return   ` <div><div class="flex flex-wrap items-center gap-2"><h3 class="text-xl font-black">${titre}</h3><span class="rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-700">${prix}</span></div><p class="mt-2 text-sm font-semibold text-slate-500">${genre} ·${duree}</p><p class="mt-3 leading-7 text-slate-600">${description}</p></div>
+
+
+ `
+}
+function card(movi){
+  return `
+            ${image(movi.affiche,movi.titre)}
+            ${content(movi.titre,movi.prix,movi.description,movi.duree,movi.genre)}
+
+            
+  `
+}
+ 
+
+
 
 
  
