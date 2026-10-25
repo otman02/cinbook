@@ -4,7 +4,7 @@ const filmcontner = document.querySelector("#films-container")
 
 
 
- randerCards()
+randerCards()
 
 
 // Bienvenue dans le fichier de travail principal de CineBook !
@@ -47,9 +47,9 @@ const filmcontner = document.querySelector("#films-container")
 // MODÈLE : observez l'élément <article data-film-id="1"> dans index.html.
 // ÉCRIVEZ VOTRE CODE ICI :
 
-function randerCards(){ films.forEach(film => {filmcontner.innerHTML += randerCard(film)})}
+function randerCards() { films.forEach(film => { filmcontner.innerHTML += randerCard(film) }) }
 
-function randerImage(affiche, titre, prix){
+function randerImage(affiche, titre, prix) {
   return `<div class="relative">
               <img src=${affiche} alt="Affiche de ${titre}" class="aspect-[2/3] w-full object-cover">
               <span class="absolute bottom-3 right-3 rounded-full bg-white/95 px-3 py-1 text-xs font-extrabold shadow-lg">${prix}</span>
@@ -58,14 +58,14 @@ function randerImage(affiche, titre, prix){
 
 }
 
-function times(duree){
-  let houre = duree/60
-  let minut = duree%60
+function times(duree) {
+  let houre = duree / 60
+  let minut = duree % 60
   return houre.toFixed(0) + "h" + minut + "min"
 }
 
-function randerCantens(genre, titre, duree, id ){
- return ` <div class="p-4">
+function randerCantens(genre, titre, duree, id) {
+  return ` <div class="p-4">
               <p class="text-xs font-bold uppercase tracking-wider text-cine-red">
                 ${genre}
               </p>
@@ -82,12 +82,12 @@ function randerCantens(genre, titre, duree, id ){
 
 }
 
-function randerCard(film){
-return `
+function randerCard(film) {
+  return `
           <article class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg" data-film-id="${film.id}">
             ${randerImage(film.affiche, film.titre, film.prix)}
             
-           ${randerCantens(film.genre , film.titre, film.duree , film.id)}
+           ${randerCantens(film.genre, film.titre, film.duree, film.id)}
 
             
 
@@ -99,76 +99,94 @@ return `
 let reseved = [];
 
 
-  let buts = document.querySelectorAll(".btn-select-flim")
-  buts.forEach(butt=>{
-    let selected= false
-  butt.addEventListener("click" , event =>{
+let buts = document.querySelectorAll(".btn-select-flim")
+buts.forEach(butt => {
+  let selected = false
+  butt.addEventListener("click", event => {
     selected = !selected
- let ID = Number(butt.dataset.id)
+    let ID = Number(butt.dataset.id)
 
-    if (selected===true){
-        let movie = films.find(x=>x.id===ID)
-        reseved.push(movie)
-         Cards()
+    if (selected === true) {
+      let movie = films.find(x => x.id === ID)
+      reseved.push(movie)
+      Cards()
+      
 
-      event.currentTarget.textContent =  "Sélectionné" ;
+      event.currentTarget.textContent = "Sélectionné";
       event.currentTarget.style.backgroundColor = 'red';
-     
+      seances()
 
-     
+
     }
-    else{ let index = reseved.findIndex(f=>f.id===ID)
-           
-         reseved.splice(index,1)
-         Cards()
-         event.currentTarget.textContent =   "Choisir ce film";
-         event.currentTarget.style.backgroundColor = '' ;         
-       
-        };
- 
-        
-  
+    else {
+      let index = reseved.findIndex(f => f.id === ID)
 
-  console.log(reseved)
-  }); 
+      reseved.splice(index, 1)
+      Cards()
+      
+      event.currentTarget.textContent = "Choisir ce film";
+      event.currentTarget.style.backgroundColor = '';
+      seances()
+    };
 
-  } )
-  
+
+
+
+    console.log(reseved)
+  });
+
+})
+
 
 const reservedfilms = document.querySelector("#film-details")
 
-function Cards(){
-reservedfilms.innerHTML = ""
+function Cards() {
+  reservedfilms.innerHTML = ""
   reseved.forEach(movi => {
 
-  reservedfilms.innerHTML += card(movi)})}
-
-
-
-
-function image( affiche, titre){
- return    `<img src=${affiche} alt="${titre}" class="aspect-[2/3] w-24 rounded-xl object-cover shadow-md"></img>`
+    reservedfilms.innerHTML += card(movi)
+  })
 }
-function content(titre,prix,description,duree,genre){
- return   ` <div><div class="flex flex-wrap items-center gap-2"><h3 class="text-xl font-black">${titre}</h3><span class="rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-700">${prix}</span></div><p class="mt-2 text-sm font-semibold text-slate-500">${genre} ·${duree}</p><p class="mt-3 leading-7 text-slate-600">${description}</p></div>
+
+
+
+
+function image(affiche, titre) {
+  return `<img src=${affiche} alt="${titre}" class="aspect-[2/3] w-24 rounded-xl object-cover shadow-md"></img>`
+}
+function content(titre, prix, description, duree, genre) {
+  return ` <div><div class="flex flex-wrap items-center gap-2"><h3 class="text-xl font-black">${titre}</h3><span class="rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-700">${prix}</span></div><p class="mt-2 text-sm font-semibold text-slate-500">${genre} ·${duree}</p><p class="mt-3 leading-7 text-slate-600">${description}</p></div>
 
 
  `
 }
-function card(movi){
+function card(movi) {
   return `
-            ${image(movi.affiche,movi.titre)}
-            ${content(movi.titre,movi.prix,movi.description,movi.duree,movi.genre)}
+            ${image(movi.affiche, movi.titre)}
+            ${content(movi.titre, movi.prix, movi.description, movi.duree, movi.genre)}
 
             
   `
 }
- 
+
+const seancebutt = document.querySelector("#seances-container")
+
+
+function seances() {
+  seancebutt.innerHTML = ""
+  reseved.forEach(fl=>{fl.seances.forEach(se=>{seancebutt.innerHTML += button(se)})})}
+
+function button(se) { 
+  return `
+  
+        <button type="button" data-seance-id="${se.id}" class="rounded-xl border border-slate-300 bg-slate-50 px-5 py-3 font-bold text-slate-700">${se.horaire}</button>
+  `
+}
 
 
 
 
- 
+
 
 
 
